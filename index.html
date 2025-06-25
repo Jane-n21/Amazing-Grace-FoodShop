@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Amazing Grace FoodShop - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <style>
+    :root {
+      --gold: #d4af37;
+      --dark: #111;
+      --light: #f8f8f8;
+      --accent: #cc3333;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+    }
+
+    /* Logo */
+    .site-header {
+      text-align: center;
+      padding: 40px 20px 10px;
+    }
+
+    .site-header .logo {
+      font-size: 48px;
+      color: var(--gold);
+      font-weight: bold;
+      text-shadow: 0 0 10px var(--gold);
+      letter-spacing: 2px;
+    }
+
+    /* Navigation */
+    nav {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    nav a {
+      color: var(--light);
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      font-size: 16px;
+      border-bottom: 2px solid transparent;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* Hero */
+    .hero-section {
+      background: url('https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+      padding: 120px 20px;
+      text-align: center;
+      color: var(--light);
+    }
+
+    .hero-section h1 {
+      font-size: 48px;
+      color: var(--gold);
+      text-shadow: 0 0 10px rgba(0,0,0,0.7);
+    }
+
+    .hero-section p {
+      font-size: 20px;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+
+    /* CTA Buttons */
+    .cta-button {
+      background: var(--accent);
+      color: white;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 15px;
+      box-shadow: 0 0 10px var(--accent);
+      transition: background 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background: #ff4c4c;
+    }
+
+    /* Section */
+    .section {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    /* Subscribe */
+    .subscribe {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 40px 20px;
+      max-width: 600px;
+      margin: 0 auto 60px;
+    }
+
+    .subscribe input[type="email"] {
+      padding: 10px;
+      width: 70%;
+      border-radius: 5px;
+      border: none;
+      margin-right: 10px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      color: #bbb;
+      padding: 20px;
+      font-size: 14px;
+    }
+
+    /* Scroll fade effect */
+    .scroll-fade {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .scroll-fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo and Navigation -->
+  <header class="site-header">
+    <div class="logo">Amazing Grace FoodShop</div>
+  </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="About_Page.html">About</a>
+    <a href="Products.html">Products</a>
+    <a href="Contact_Page.html">Contact</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section scroll-fade">
+    <h1>Our Mission</h1>
+    <p>Bringing delicious, locally made meals to our community with love, quality, and sustainability at our core.</p>
+    <a href="About_Page.html" class="cta-button">Learn More</a>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section scroll-fade">
+    <h2 style="color: var(--gold);">Quick Access</h2>
+    <p>Explore the heart of our business:</p>
+    <a href="About_Page.html" class="cta-button" style="margin: 10px;">About Us</a>
+    <a href="Products.html" class="cta-button" style="margin: 10px;">Our Products</a>
+    <a href="Contact_Page.html" class="cta-button" style="margin: 10px;">Contact</a>
+  </section>
+
+  <!-- Subscribe -->
+  <section class="subscribe scroll-fade">
+    <p style="font-size:18px;">Stay in touch with us for updates and offers!</p>
+    <form>
+      <input type="email" placeholder="Your email" required />
+      <button type="submit" class="cta-button">Subscribe</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; Amazing Grace FoodShop. All rights reserved.
+  </footer>
+
+  <!-- Scroll Effects -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    });
+
+    document.querySelectorAll('.scroll-fade').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

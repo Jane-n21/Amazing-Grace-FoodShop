@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact - Amazing Grace FoodShop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <style>
+    :root {
+      --gold: #d4af37;
+      --dark: #111;
+      --light: #f8f8f8;
+      --accent: #cc3333;
+      --light-gold: #f5e3a1;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      color: #ddd;
+      margin: 0;
+      background-color: var(--dark);
+      padding-top: 60px;
+    }
+
+    /* Logo */
+    .site-header {
+      text-align: center;
+      padding: 40px 20px 10px;
+    }
+
+    .site-header .logo {
+      font-size: 48px;
+      color: var(--gold);
+      font-weight: bold;
+      text-shadow: 0 0 10px var(--gold);
+      letter-spacing: 2px;
+    }
+
+    /* Navigation */
+    nav {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #222;
+      padding-bottom: 10px;
+    }
+
+    nav a {
+      color: var(--light);
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      font-size: 16px;
+      border-bottom: 2px solid transparent;
+      transition: 0.3s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto 50px;
+      padding: 0 15px;
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .contact-header h2 {
+      font-size: 44px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .contact-header p {
+      font-size: 16px;
+      margin-top: 0;
+      color: #eee;
+    }
+
+    .contact-box {
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+      margin-bottom: 30px;
+    }
+
+    .contact-info h4 {
+      color: var(--gold);
+      margin-top: 20px;
+      font-weight: 600;
+    }
+
+    .contact-info p {
+      color: var(--light-gold);
+      margin-bottom: 10px;
+    }
+
+    .form-control {
+      background-color: #333;
+      border: 1px solid #666;
+      color: #eee;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .form-control::placeholder {
+      color: #bbb;
+    }
+
+    .form-control:focus {
+      background-color: #444;
+      border-color: var(--gold);
+      outline: none;
+      box-shadow: 0 0 8px var(--gold);
+    }
+
+    .btn-custom {
+      background: linear-gradient(to right, var(--gold), #b8860b);
+      border: none;
+      color: #222;
+      padding: 10px 20px;
+      font-weight: 600;
+      font-size: 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-custom:hover {
+      background: linear-gradient(to right, #f1c40f, #daa520);
+    }
+
+    .spinner {
+      display: inline-block;
+      margin-left: 8px;
+      color: white;
+    }
+
+    #success-message {
+      display: none;
+      margin-top: 15px;
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 16px;
+      text-align: center;
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    #success-message a {
+      cursor: pointer;
+      text-decoration: underline;
+      color: var(--gold);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .row.equal-height {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    @media (max-width: 767px) {
+      .row.equal-height {
+        display: block;
+      }
+    }
+
+    footer {
+      background-color: var(--dark);
+      padding: 15px 0;
+      text-align: center;
+      color: #ccc;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    footer .social-icons {
+      margin-bottom: 10px;
+    }
+
+    footer .social-icons a {
+      display: inline-block;
+      margin: 0 14px;
+      font-size: 24px;
+      text-decoration: none;
+      transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+    }
+
+    footer .social-icons a.facebook { color: #3b5998; }
+    footer .social-icons a.linkedin { color: #0077b5; }
+    footer .social-icons a.instagram { color: #e4405f; }
+    footer .social-icons a.twitter { color: #1da1f2; }
+
+    footer .social-icons a:hover {
+      opacity: 0.8;
+      transform: scale(1.1);
+    }
+
+    footer p {
+      font-size: 13px;
+      margin-top: 8px;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="logo">Amazing Grace FoodShop</div>
+  </header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="About_Page.html">About</a>
+    <a href="Products.html">Products</a>
+    <a href="Contact_Page.html" class="active">Contact</a>
+  </nav>
+
+  <div class="container">
+    <div class="contact-header">
+      <h2>Contact Us</h2>
+      <p>Feel free to reach out for collaborations or inquiries!</p>
+    </div>
+
+    <div class="row equal-height">
+      <div class="col-xs-12 col-md-5 contact-box contact-info">
+        <h4><span class="glyphicon glyphicon-user"></span> Yamikani Otaniel</h4>
+        <p><span class="glyphicon glyphicon-envelope"></span> YamikaniOtaniel@gmail.com</p>
+        <p><span class="glyphicon glyphicon-earphone"></span> +265 991 660 588</p>
+
+        <hr style="border-color: #444;" />
+
+        <h4><span class="glyphicon glyphicon-user"></span> Jane Otaniel</h4>
+        <p><span class="glyphicon glyphicon-envelope"></span> otanieljane@gmail.com</p>
+        <p><span class="glyphicon glyphicon-earphone"></span> +265 885 177 053</p>
+
+        <hr style="border-color: #444;" />
+
+        <h4><span class="glyphicon glyphicon-map-marker"></span> Location:</h4>
+        <p>Blantyre, Malawi</p>
+      </div>
+
+      <div class="col-xs-12 col-md-6 contact-box">
+        <form id="contact-form" action="https://formspree.io/f/xldnpbnb" method="POST">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Your Email</label>
+            <input type="email" class="form-control" name="_replyto" id="email" placeholder="Enter your email" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea class="form-control" name="message" id="message" rows="5" placeholder="Write your message..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-custom" id="submit-btn">
+            Send Message <span class="spinner" id="spinner" style="display: none;"><i class="fa fa-spinner fa-spin"></i></span>
+          </button>
+        </form>
+        <div id="success-message"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="social-icons">
+      <a href="https://facebook.com" class="facebook" target="_blank" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+      <a href="https://www.linkedin.com/in/jane-otaniel-137a52306" class="linkedin" target="_blank" aria-label="LinkedIn"><i class="fa fa-linkedin"></i></a>
+      <a href="https://instagram.com" class="instagram" target="_blank" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
+      <a href="https://twitter.com" class="twitter" target="_blank" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+    </div>
+    <p>&copy; 2025 Amazing Grace FoodShop. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script>
+    const form = document.getElementById('contact-form');
+    const successMessage = document.getElementById('success-message');
+    const spinner = document.getElementById('spinner');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      spinner.style.display = 'inline-block';
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(form.action, {
+          method: form.method,
+          headers: { 'Accept': 'application/json' },
+          body: formData
+        });
+
+        if (response.ok) {
+          spinner.style.display = 'none';
+          successMessage.textContent = 'Thank you! Your form was submitted successfully.';
+          successMessage.style.display = 'block';
+          form.reset();
+          setTimeout(() => {
+            successMessage.innerHTML = '<a href="#" id="submit-another">Submit another form</a>';
+            document.getElementById('submit-another').onclick = ev => {
+              ev.preventDefault();
+              successMessage.style.display = 'none';
+              form.querySelector('input[name="name"]').focus();
+            };
+          }, 3000);
+        } else {
+          alert('Oops! There was a problem submitting your form.');
+        }
+      } catch {
+        alert('Oops! There was a problem submitting your form.');
+      } finally {
+        spinner.style.display = 'none';
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

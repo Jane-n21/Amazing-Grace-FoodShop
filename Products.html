@@ -1,0 +1,629 @@
+<!DOCTYPE html>  
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Products - Amazing Grace FoodShop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <style>
+    :root {
+      --gold: #d4af37;
+      --dark: #111;
+      --light: #f8f8f8;
+      --accent: #cc3333;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+      position: relative;
+      min-height: 100vh;
+      padding-bottom: 100px; /* for footer space */
+    }
+
+    .site-header {
+      text-align: center;
+      padding: 40px 20px 10px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .site-header .logo {
+      font-size: 48px;
+      color: var(--gold);
+      font-weight: bold;
+      text-shadow: 0 0 10px var(--gold);
+      letter-spacing: 2px;
+      flex-grow: 1;
+    }
+
+    nav {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    nav a {
+      color: var(--light);
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      font-size: 16px;
+      border-bottom: 2px solid transparent;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* Cart Icon + View Cart Button */
+    .cart-container {
+      position: absolute;
+      right: 20px;
+      top: 50px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 28px;
+      color: var(--gold);
+      user-select: none;
+    }
+    .cart-icon {
+      cursor: pointer;
+      position: relative;
+    }
+    .cart-count {
+      background: var(--accent);
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      border-radius: 50%;
+      padding: 3px 8px;
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      pointer-events: none;
+      display: none;
+    }
+    .view-cart-btn {
+      background: var(--gold);
+      color: var(--dark);
+      font-weight: bold;
+      border-radius: 30px;
+      padding: 6px 16px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--gold);
+      border: none;
+      transition: background 0.3s ease;
+      user-select: none;
+    }
+    .view-cart-btn:hover {
+      background: #c19a2c;
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .page-header h1 {
+      font-size: 42px;
+      color: var(--gold);
+      text-shadow: 0 0 8px rgba(0,0,0,0.7);
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 18px;
+      color: var(--light);
+    }
+
+    /* Filter Buttons */
+    .filter-buttons {
+      text-align: center;
+      margin: 30px 0 40px;
+    }
+
+    .filter-buttons button {
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      font-weight: bold;
+      margin: 0 8px;
+      padding: 8px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-buttons button.active,
+    .filter-buttons button:hover {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    /* Products Grid */
+    .products-grid {
+      max-width: 1000px;
+      margin: 0 auto 60px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      padding: 0 20px;
+    }
+
+    .product-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+      overflow: hidden;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      opacity: 1;
+    }
+
+    .product-card.hide {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.95);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      height: 0;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 2px solid var(--gold);
+    }
+
+    .product-content {
+      padding: 20px;
+      text-align: center;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product-content h3 {
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .product-content p {
+      font-size: 16px;
+      margin-bottom: 15px;
+      color: var(--light);
+      min-height: 60px;
+      flex-grow: 1;
+    }
+
+    .product-price {
+      font-weight: bold;
+      font-size: 18px;
+      color: var(--accent);
+      margin-bottom: 15px;
+    }
+
+    /* Add to Cart Button */
+    .add-to-cart-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--accent);
+      transition: background 0.3s ease;
+      outline: none;
+    }
+
+    .add-to-cart-btn:hover {
+      background: #ff4c4c;
+    }
+
+    /* Cart Sidebar */
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: -360px;
+      width: 350px;
+      height: 100vh;
+      background: var(--dark);
+      box-shadow: -4px 0 12px rgba(0,0,0,0.8);
+      padding: 20px;
+      transition: right 0.3s ease;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      color: var(--light);
+    }
+
+    .cart-sidebar.open {
+      right: 0;
+    }
+
+    .cart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .cart-header h2 {
+      color: var(--gold);
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .close-cart {
+      cursor: pointer;
+      font-size: 24px;
+      color: var(--accent);
+      user-select: none;
+      background: none;
+      border: none;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .cart-items {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+      padding-bottom: 8px;
+    }
+
+    .cart-item-name {
+      flex-grow: 1;
+      margin-right: 10px;
+    }
+
+    .cart-item-price {
+      font-weight: bold;
+      color: var(--accent);
+      margin-right: 10px;
+    }
+
+    .remove-item {
+      cursor: pointer;
+      color: #ff4c4c;
+      font-weight: bold;
+      user-select: none;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .cart-total {
+      font-weight: 700;
+      font-size: 20px;
+      text-align: right;
+      margin-bottom: 10px;
+      color: var(--gold);
+    }
+
+    /* Checkout button */
+    #checkoutBtn {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--dark);
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 10px var(--gold);
+      transition: background 0.3s ease;
+      margin-top: 10px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    #checkoutBtn:hover {
+      background: #c19a2c;
+      color: var(--dark);
+    }
+
+    .empty-cart {
+      text-align: center;
+      margin-top: 40px;
+      font-style: italic;
+      color: #777;
+    }
+
+    /* Footer styles */
+    footer {
+      background: var(--dark);
+      color: var(--gold);
+      text-align: center;
+      padding: 25px 15px;
+      font-size: 14px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      box-shadow: inset 0 1px 3px rgba(212, 175, 55, 0.3);
+      user-select: none;
+    }
+
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: bold;
+      margin-left: 5px;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 400px) {
+      .cart-sidebar {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="logo">Amazing Grace FoodShop</div>
+    <div class="cart-container" role="region" aria-label="Shopping cart controls">
+      <div class="cart-icon" id="cartIcon" title="View Cart" aria-label="View Cart" tabindex="0">
+        <i class="fa fa-shopping-cart"></i>
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
+      <button class="view-cart-btn" id="viewCartBtn" aria-label="Open Cart Sidebar">View Cart</button>
+    </div>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="About_Page.html">About</a>
+    <a href="products.html" aria-current="page">Products</a>
+    <a href="Contact_Page.html">Contact</a>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header scroll-fade">
+    <h1>Our Products</h1>
+    <p>Explore our delicious range of locally made meals, crafted with passion and quality ingredients.</p>
+  </section>
+
+  <!-- Filter Buttons -->
+  <div class="filter-buttons scroll-fade" role="region" aria-label="Filter products by category">
+    <button class="active" data-filter="all">All</button>
+    <button data-filter="meat">Meat</button>
+    <button data-filter="vegetarian">Vegetarian</button>
+    <button data-filter="dessert">Dessert</button>
+  </div>
+
+  <!-- Products Grid -->
+  <section class="products-grid" aria-live="polite" aria-relevant="all">
+    <!-- Classic Beef Stew -->
+    <article class="product-card scroll-fade" data-category="meat" data-id="1" data-name="Classic Beef Stew" data-price="12.99" tabindex="0">
+      <img class="product-image" src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=500&q=80" alt="Classic Beef Stew" />
+      <div class="product-content">
+        <h3>Classic Beef Stew</h3>
+        <p>A hearty stew made with tender beef, fresh vegetables, and a rich gravy.</p>
+        <div class="product-price">$12.99</div>
+        <button class="add-to-cart-btn" aria-label="Add Classic Beef Stew to cart">Add to Cart</button>
+      </div>
+    </article>
+
+    <!-- Spicy Chicken Wings -->
+    <article class="product-card scroll-fade" data-category="meat" data-id="2" data-name="Spicy Chicken Wings" data-price="9.99" tabindex="0">
+      <img class="product-image" src="https://images.unsplash.com/photo-1604908177226-d35e3e72fbc9?auto=format&fit=crop&w=500&q=80" alt="Spicy Chicken Wings" />
+      <div class="product-content">
+        <h3>Spicy Chicken Wings</h3>
+        <p>Juicy wings coated in a flavorful spicy sauce — perfect for sharing.</p>
+        <div class="product-price">$9.99</div>
+        <button class="add-to-cart-btn" aria-label="Add Spicy Chicken Wings to cart">Add to Cart</button>
+      </div>
+    </article>
+
+    <!-- Vegetarian Delight -->
+    <article class="product-card scroll-fade" data-category="vegetarian" data-id="3" data-name="Vegetarian Delight" data-price="11.50" tabindex="0">
+      <img class="product-image" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=500&q=80" alt="Vegetarian Delight" />
+      <div class="product-content">
+        <h3>Vegetarian Delight</h3>
+        <p>A fresh and colorful mix of roasted vegetables and grains, full of flavor.</p>
+        <div class="product-price">$11.50</div>
+        <button class="add-to-cart-btn" aria-label="Add Vegetarian Delight to cart">Add to Cart</button>
+      </div>
+    </article>
+
+    <!-- Homemade Apple Pie -->
+    <article class="product-card scroll-fade" data-category="dessert" data-id="4" data-name="Homemade Apple Pie" data-price="6.75" tabindex="0">
+      <img class="product-image" src="https://images.unsplash.com/photo-1527515637463-6a6ed2623e9f?auto=format&fit=crop&w=500&q=80" alt="Homemade Apple Pie" />
+      <div class="product-content">
+        <h3>Homemade Apple Pie</h3>
+        <p>A classic dessert made from scratch with fresh apples and a flaky crust.</p>
+        <div class="product-price">$6.75</div>
+        <button class="add-to-cart-btn" aria-label="Add Homemade Apple Pie to cart">Add to Cart</button>
+      </div>
+    </article>
+  </section>
+
+  <!-- Cart Sidebar -->
+  <aside class="cart-sidebar" id="cartSidebar" aria-label="Shopping cart sidebar" role="region" aria-live="polite" aria-atomic="true">
+    <div class="cart-header">
+      <h2>Your Cart</h2>
+      <button class="close-cart" id="closeCartBtn" aria-label="Close Cart Sidebar">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="empty-cart">Your cart is empty.</p>
+    </div>
+    <div class="cart-total" id="cartTotal">Total: $0.00</div>
+    <a href="#" id="checkoutBtn" tabindex="0">Checkout</a>
+  </aside>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Amazing Grace FoodShop. All rights reserved.
+    <br />
+    Made with <span style="color: #cc3333;">&#10084;</span> by Amazing Grace Team.
+  </footer>
+
+  <script>
+    // Selectors
+    const filterButtons = document.querySelectorAll('.filter-buttons button');
+    const products = document.querySelectorAll('.product-card');
+    const cartSidebar = document.getElementById('cartSidebar');
+    const cartIcon = document.getElementById('cartIcon');
+    const viewCartBtn = document.getElementById('viewCartBtn');
+    const closeCartBtn = document.getElementById('closeCartBtn');
+    const cartItemsContainer = document.getElementById('cartItems');
+    const cartTotalEl = document.getElementById('cartTotal');
+    const cartCountEl = document.getElementById('cartCount');
+
+    let cart = {};
+
+    // Filter products
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+
+        products.forEach(product => {
+          if (filter === 'all' || product.dataset.category === filter) {
+            product.classList.remove('hide');
+          } else {
+            product.classList.add('hide');
+          }
+        });
+      });
+    });
+
+    // Add to cart button functionality
+    products.forEach(product => {
+      const addBtn = product.querySelector('.add-to-cart-btn');
+      addBtn.addEventListener('click', () => {
+        const id = product.dataset.id;
+        const name = product.dataset.name;
+        const price = parseFloat(product.dataset.price);
+
+        if (cart[id]) {
+          cart[id].quantity++;
+        } else {
+          cart[id] = { name, price, quantity: 1 };
+        }
+        updateCartUI();
+      });
+    });
+
+    // Update Cart UI
+    function updateCartUI() {
+      cartItemsContainer.innerHTML = '';
+      let total = 0;
+      let itemCount = 0;
+
+      if (Object.keys(cart).length === 0) {
+        cartItemsContainer.innerHTML = '<p class="empty-cart">Your cart is empty.</p>';
+        cartCountEl.style.display = 'none';
+        cartTotalEl.textContent = 'Total: $0.00';
+        return;
+      }
+
+      for (const id in cart) {
+        const item = cart[id];
+        total += item.price * item.quantity;
+        itemCount += item.quantity;
+
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.setAttribute('data-id', id);
+
+        cartItem.innerHTML = `
+          <div class="cart-item-name">${item.name} x${item.quantity}</div>
+          <div class="cart-item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+          <button class="remove-item" aria-label="Remove ${item.name} from cart">&times;</button>
+        `;
+
+        const removeBtn = cartItem.querySelector('.remove-item');
+        removeBtn.addEventListener('click', () => {
+          delete cart[id];
+          updateCartUI();
+        });
+
+        cartItemsContainer.appendChild(cartItem);
+      }
+
+      cartCountEl.textContent = itemCount;
+      cartCountEl.style.display = itemCount > 0 ? 'inline-block' : 'none';
+      cartTotalEl.textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    // Open and close cart sidebar
+    function openCart() {
+      cartSidebar.classList.add('open');
+      cartSidebar.focus();
+    }
+
+    function closeCart() {
+      cartSidebar.classList.remove('open');
+      cartIcon.focus();
+    }
+
+    cartIcon.addEventListener('click', openCart);
+    viewCartBtn.addEventListener('click', openCart);
+    closeCartBtn.addEventListener('click', closeCart);
+
+    // Keyboard accessibility for cart icon
+    cartIcon.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openCart();
+      }
+    });
+
+    // Close cart with Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && cartSidebar.classList.contains('open')) {
+        closeCart();
+      }
+    });
+
+    // Checkout button
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    checkoutBtn.addEventListener('click', e => {
+      e.preventDefault();
+      if (Object.keys(cart).length === 0) {
+        alert('Your cart is empty.');
+      } else {
+        alert('Thank you for your order! (Functionality to be implemented)');
+        cart = {};
+        updateCartUI();
+        closeCart();
+      }
+    });
+
+    // Initialize cart UI
+    updateCartUI();
+  </script>
+</body>
+</html>
